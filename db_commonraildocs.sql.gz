@@ -1,0 +1,1737 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 21-Fev-2023 às 15:53
+-- Versão do servidor: 10.4.24-MariaDB
+-- versão do PHP: 8.1.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `db_commonraildocs`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_login_prestador`
+--
+
+CREATE TABLE `tb_login_prestador` (
+  `id_prestador` int(5) NOT NULL,
+  `nome_prestador` varchar(60) NOT NULL,
+  `cpf_cnpj_prestador` varchar(20) NOT NULL,
+  `email_prestador` varchar(60) NOT NULL,
+  `senha_prestador` varchar(20) NOT NULL,
+  `cidade_prestador` varchar(60) NOT NULL,
+  `estado_prestador` varchar(60) NOT NULL,
+  `nivel_prestador` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tb_login_prestador`
+--
+
+INSERT INTO `tb_login_prestador` (`id_prestador`, `nome_prestador`, `cpf_cnpj_prestador`, `email_prestador`, `senha_prestador`, `cidade_prestador`, `estado_prestador`, `nivel_prestador`) VALUES
+(1, 'TIAGO CARVALHO PONTES', '041.849.341-37', 'tiago.c1@hotmail.com', '090491', 'Juara', 'Mato Grosso', 1),
+(2, 'RETIFICADORA JUARA EIRELI', '70.490.982/0001-22', 'retificadorajuara@live.com', 'retifica123', 'Juara', 'Mato Grosso', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_login_tomador`
+--
+
+CREATE TABLE `tb_login_tomador` (
+  `id_tomador` int(5) NOT NULL,
+  `nome_tomador` varchar(60) NOT NULL,
+  `cpf_cnpj_tomador` varchar(20) NOT NULL,
+  `email_tomador` varchar(60) DEFAULT NULL,
+  `senha_tomador` varchar(20) NOT NULL,
+  `cidade_tomador` varchar(60) NOT NULL,
+  `estado_tomador` varchar(60) NOT NULL,
+  `nivel_tomador` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tb_login_tomador`
+--
+
+INSERT INTO `tb_login_tomador` (`id_tomador`, `nome_tomador`, `cpf_cnpj_tomador`, `email_tomador`, `senha_tomador`, `cidade_tomador`, `estado_tomador`, `nivel_tomador`) VALUES
+(1, 'JUMASA AGRICOLA E COMERCIO LTDA', '36.942.860/0001-91', NULL, '36942860000191', 'Juara', 'Mato Grosso', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_postagens`
+--
+
+CREATE TABLE `tb_postagens` (
+  `id_post` int(5) NOT NULL,
+  `titulo_post` varchar(60) NOT NULL,
+  `imagem_post` varchar(60) NOT NULL,
+  `texto_post` varchar(140) NOT NULL,
+  `data_post` date NOT NULL,
+  `categoria_post` int(2) NOT NULL,
+  `url_post` varchar(60) NOT NULL,
+  `id_prestador` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_produtos`
+--
+
+CREATE TABLE `tb_produtos` (
+  `id_produtos` int(5) NOT NULL,
+  `nome_produtos` varchar(60) NOT NULL,
+  `cod_produtos` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_produtos_relacao_categoria_marca_modelo_designacao`
+--
+
+CREATE TABLE `tb_produtos_relacao_categoria_marca_modelo_designacao` (
+  `id_produtos_relacao_categoria_marca_modelo_designacao` int(5) NOT NULL,
+  `produtos_produto_id` int(5) NOT NULL,
+  `produtos_categoria_id` int(5) NOT NULL,
+  `produtos_marca_id` int(5) NOT NULL,
+  `produtos_modelo_id` int(5) NOT NULL,
+  `produtos_designacao_id` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_produto_categoria`
+--
+
+CREATE TABLE `tb_produto_categoria` (
+  `id_produto_categoria` int(5) NOT NULL,
+  `nome_produto_categoria` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tb_produto_categoria`
+--
+
+INSERT INTO `tb_produto_categoria` (`id_produto_categoria`, `nome_produto_categoria`) VALUES
+(1, 'Bico Injetor Common Rail'),
+(2, 'Bico Injetor Mecânico'),
+(3, 'Bomba Alimentadora'),
+(4, 'Bomda de Alta Pressão'),
+(5, 'Bomba Injetora'),
+(6, 'Bomba Injetora HEUI'),
+(7, 'Motor'),
+(8, 'Tubo Rail'),
+(9, 'Unidade HEUI'),
+(10, 'Unidade UI/UP'),
+(11, 'Módulo ECU');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_produto_designacao`
+--
+
+CREATE TABLE `tb_produto_designacao` (
+  `id_produto_designacao` int(5) NOT NULL,
+  `nome_produto_designacao` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tb_produto_designacao`
+--
+
+INSERT INTO `tb_produto_designacao` (`id_produto_designacao`, `nome_produto_designacao`) VALUES
+(1, 'Injeção Eletrônica Diesel'),
+(2, 'Injeção Mecânica Diesel');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_produto_marca`
+--
+
+CREATE TABLE `tb_produto_marca` (
+  `id_produto_marca` int(5) NOT NULL,
+  `nome_produto_marca` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tb_produto_marca`
+--
+
+INSERT INTO `tb_produto_marca` (`id_produto_marca`, `nome_produto_marca`) VALUES
+(1, 'Bosch'),
+(2, 'Caterpillar'),
+(3, 'Continental'),
+(4, 'Cummins'),
+(5, 'Delphi'),
+(6, 'Denso'),
+(7, 'Zexel');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_produto_modelo`
+--
+
+CREATE TABLE `tb_produto_modelo` (
+  `id_produto_modelo` int(5) NOT NULL,
+  `produto_modelo` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_produto_relacao_categoria_marca`
+--
+
+CREATE TABLE `tb_produto_relacao_categoria_marca` (
+  `id_produto_relacao_categoria_marca` int(5) NOT NULL,
+  `relacao_produto_categoria_id` int(5) NOT NULL,
+  `relacao_produto_marca_id` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tb_produto_relacao_categoria_marca`
+--
+
+INSERT INTO `tb_produto_relacao_categoria_marca` (`id_produto_relacao_categoria_marca`, `relacao_produto_categoria_id`, `relacao_produto_marca_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 5),
+(5, 1, 6),
+(6, 4, 1),
+(7, 4, 2),
+(8, 4, 3),
+(9, 4, 4),
+(10, 4, 5),
+(11, 4, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_produto_tipo_atuador`
+--
+
+CREATE TABLE `tb_produto_tipo_atuador` (
+  `id_produto_tipo_atuador` int(5) NOT NULL,
+  `produto_tipo_atuador` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tb_produto_tipo_atuador`
+--
+
+INSERT INTO `tb_produto_tipo_atuador` (`id_produto_tipo_atuador`, `produto_tipo_atuador`) VALUES
+(1, 'Indutivo'),
+(2, 'Indutivo DS'),
+(3, 'Piezo');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_acoplamento_falso`
+--
+
+CREATE TABLE `tb_prod_bombacr_acoplamento_falso` (
+  `id_prod_bombacr_acoplamento_falso` int(5) NOT NULL,
+  `cod_prod_bombacr_acoplamento_falso` varchar(60) NOT NULL,
+  `nome_prod_bombacr_acoplamento_falso` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_acoplamento_falso` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_atuador`
+--
+
+CREATE TABLE `tb_prod_bombacr_atuador` (
+  `id_prod_bombacr_atuador` int(5) NOT NULL,
+  `cod_prod_bombacr_atuador` varchar(60) NOT NULL,
+  `nome_prod_bombacr_atuador` varchar(60) NOT NULL,
+  `id_tipo_atuador_prod_bombacr_atuador` int(5) NOT NULL,
+  `id_marca_prod_bombacr_atuador` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_bomba_engrenagem`
+--
+
+CREATE TABLE `tb_prod_bombacr_bomba_engrenagem` (
+  `id_prod_bombacr_bomba_engrenagem` int(5) NOT NULL,
+  `cod_prod_bombacr_bomba_engrenagem` varchar(60) NOT NULL,
+  `nome_prod_bombacr_bomba_engrenagem` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_bomba_engrenagem` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_bucha_mancal`
+--
+
+CREATE TABLE `tb_prod_bombacr_bucha_mancal` (
+  `id_prod_bombacr_bucha_mancal` int(5) NOT NULL,
+  `cod_prod_bombacr_bucha_mancal` varchar(60) NOT NULL,
+  `nome_prod_bombacr_bucha_mancal` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_bucha_mancal` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_cabeçote`
+--
+
+CREATE TABLE `tb_prod_bombacr_cabeçote` (
+  `id_prod_bombacr_cabeçote` int(5) NOT NULL,
+  `cod_prod_bombacr_cabeçote` varchar(20) NOT NULL,
+  `nome_prod_bombacr_cabeçote` varchar(20) NOT NULL,
+  `id_marca_prod_bombacr_cabeçote` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_eixo_excentrico`
+--
+
+CREATE TABLE `tb_prod_bombacr_eixo_excentrico` (
+  `id_prod_bombacr_eixo_excentrico` int(5) NOT NULL,
+  `cod_prod_bombacr_eixo_excentrico` varchar(60) NOT NULL,
+  `nome_prod_bombacr_eixo_excentrico` varchar(6) NOT NULL,
+  `id_marca_prod_bombacr_eixo_excentrico` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_elemento`
+--
+
+CREATE TABLE `tb_prod_bombacr_elemento` (
+  `id_prod_bombacr_elemento` int(5) NOT NULL,
+  `cod_prod_bombacr_elemento` varchar(60) NOT NULL,
+  `nome_prod_bombacr_elemento` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_elemento` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_esfera`
+--
+
+CREATE TABLE `tb_prod_bombacr_esfera` (
+  `id_prod_bombacr_esfera` int(5) NOT NULL,
+  `cod_prod_bombacr_esfera` varchar(60) NOT NULL,
+  `nome_prod_bombacr_esfera` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_esfera` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_jg_reparo`
+--
+
+CREATE TABLE `tb_prod_bombacr_jg_reparo` (
+  `id_prod_bombacr_jg_reparo` int(5) NOT NULL,
+  `cod_prod_bombacr_jg_reparo` varchar(60) NOT NULL,
+  `nome_prod_bombacr_jg_reparo` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_jg_reparo` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_mola_pressao`
+--
+
+CREATE TABLE `tb_prod_bombacr_mola_pressao` (
+  `id_prod_bombacr_mola_pressao` int(5) NOT NULL,
+  `cod_prod_bombacr_mola_pressao` varchar(60) NOT NULL,
+  `nome_prod_bombacr_mola_pressao` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_mola_pressao` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_parafuso`
+--
+
+CREATE TABLE `tb_prod_bombacr_parafuso` (
+  `id_prod_bombacr_parafuso` int(5) NOT NULL,
+  `cod_prod_bombacr_parafuso` int(60) NOT NULL,
+  `nome_prod_bombacr_parafuso` int(60) NOT NULL,
+  `id_marca_prod_bombacr_parafuso` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_retentor`
+--
+
+CREATE TABLE `tb_prod_bombacr_retentor` (
+  `id_prod_bombacr_retentor` int(5) NOT NULL,
+  `cod_prod_bombacr_retentor` varchar(60) NOT NULL,
+  `nome_prod_bombacr_retentor` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_retentor` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_roldana`
+--
+
+CREATE TABLE `tb_prod_bombacr_roldana` (
+  `id_prod_bombacr_roldana` int(5) NOT NULL,
+  `cod_prod_bombacr_roldana` varchar(60) NOT NULL,
+  `nome_prod_bombacr_roldana` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_roldana` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_rolete`
+--
+
+CREATE TABLE `tb_prod_bombacr_rolete` (
+  `id_prod_bombacr_rolete` int(5) NOT NULL,
+  `cod_prod_bombacr_rolete` varchar(60) NOT NULL,
+  `nome_prod_bombacr_rolete` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_rolete` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_tucho`
+--
+
+CREATE TABLE `tb_prod_bombacr_tucho` (
+  `id_prod_bombacr_tucho` int(5) NOT NULL,
+  `cod_prod_bombacr_tucho` varchar(60) NOT NULL,
+  `nome_prod_bombacr_tucho` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_tucho` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_valvula_aspiracao`
+--
+
+CREATE TABLE `tb_prod_bombacr_valvula_aspiracao` (
+  `id_prod_bombacr_valvula_aspiracao` int(5) NOT NULL,
+  `cod_prod_bombacr_valvula_aspiracao` varchar(60) NOT NULL,
+  `nome_prod_bombacr_valvula_aspiracao` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_valvula_aspiracao` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_bombacr_valvula_transbordo`
+--
+
+CREATE TABLE `tb_prod_bombacr_valvula_transbordo` (
+  `id_prod_bombacr_valvula_transbordo` int(5) NOT NULL,
+  `cod_prod_bombacr_valvula_transbordo` varchar(60) NOT NULL,
+  `nome_prod_bombacr_valvula_transbordo` varchar(60) NOT NULL,
+  `id_marca_prod_bombacr_valvula_transbordo` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_anel_oring`
+--
+
+CREATE TABLE `tb_prod_injetorcr_anel_oring` (
+  `id_prod_injetorcr_anel_oring` int(5) NOT NULL,
+  `cod_prod_injetorcr_anel_oring` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_anel_oring` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_anel_oring` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_arruela_pe_do_bico`
+--
+
+CREATE TABLE `tb_prod_injetorcr_arruela_pe_do_bico` (
+  `id_prod_injetorcr_arruela_pe_do_bico` int(5) NOT NULL,
+  `nome_prod_injetorcr_arruela_pe_do_bico` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_arruela_pe_do_bico` int(5) NOT NULL,
+  `cod_prod_injetorcr_arruela_pe_do_bico` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_atuador`
+--
+
+CREATE TABLE `tb_prod_injetorcr_atuador` (
+  `id_prod_injetorcr_atuador` int(5) NOT NULL,
+  `cod_prod_injetorcr_atuador` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_atuador` varchar(60) NOT NULL,
+  `id_tipo_atuador_prod_injetorcr_atuador` int(5) NOT NULL,
+  `id_marca_prod_injetorcr_atuador` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_bico_injetor`
+--
+
+CREATE TABLE `tb_prod_injetorcr_bico_injetor` (
+  `id_prod_injetorcr_bico_injetor` int(5) NOT NULL,
+  `cod_prod_injetorcr_bico_injetor` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_bico_injetor` int(5) NOT NULL,
+  `nome_prod_injetorcr_bico_injetor` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_conector_entrada`
+--
+
+CREATE TABLE `tb_prod_injetorcr_conector_entrada` (
+  `id_prod_injetorcr_conector_entrada` int(5) NOT NULL,
+  `cod_prod_injetorcr_conector_entrada` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_conector_entrada` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_conector_entrada` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_filtro_injetor`
+--
+
+CREATE TABLE `tb_prod_injetorcr_filtro_injetor` (
+  `id_prod_injetorcr_filtro_injetor` int(5) NOT NULL,
+  `cod_prod_injetorcr_filtro_injetor` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_filtro_injetor` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_filtro_injetor` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_guia_calco_restricao`
+--
+
+CREATE TABLE `tb_prod_injetorcr_guia_calco_restricao` (
+  `id_prod_injetorcr_guia_calco_restricao` int(5) NOT NULL,
+  `cod_prod_injetorcr_guia_calco_restricao` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_guia_calco_restricao` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_guia_calco_restricao` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_guia_micro_esfera`
+--
+
+CREATE TABLE `tb_prod_injetorcr_guia_micro_esfera` (
+  `id_prod_injetorcr_guia_micro_esfera` int(5) NOT NULL,
+  `cod_prod_injetorcr_guia_micro_esfera` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_guia_micro_esfera` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_guia_micro_esfera` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_jg_pecas_induzido`
+--
+
+CREATE TABLE `tb_prod_injetorcr_jg_pecas_induzido` (
+  `id_prod_injetorcr_jg_pecas_induzido` int(5) NOT NULL,
+  `cod_prod_injetorcr_jg_pecas_induzido` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_jg_pecas_induzido` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_jg_pecas_induzido` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_jg_reparo`
+--
+
+CREATE TABLE `tb_prod_injetorcr_jg_reparo` (
+  `id_prod_injetorcr_jg_reparo` int(5) NOT NULL,
+  `cod_prod_injetorcr_jg_reparo` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_jg_reparo` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_jg_reparo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_kit_reparo_completo`
+--
+
+CREATE TABLE `tb_prod_injetorcr_kit_reparo_completo` (
+  `id_prod_injetorcr_kit_reparo_completo` int(5) NOT NULL,
+  `cod_prod_injetorcr_kit_reparo_completo` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_kit_reparo_completo` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_kit_reparo_completo` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_micro_esfera`
+--
+
+CREATE TABLE `tb_prod_injetorcr_micro_esfera` (
+  `id_prod_injetorcr_micro_esfera` int(5) NOT NULL,
+  `cod_prod_injetorcr_micro_esfera` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_micro_esfera` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_micro_esfera` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_mola_bobina`
+--
+
+CREATE TABLE `tb_prod_injetorcr_mola_bobina` (
+  `id_prod_injetorcr_mola_bobina` int(5) NOT NULL,
+  `cod_prod_injetorcr_mola_bobina` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_mola_bobina` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_mola_bobina` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_mola_induzido`
+--
+
+CREATE TABLE `tb_prod_injetorcr_mola_induzido` (
+  `id_prod_injetorcr_mola_induzido` int(5) NOT NULL,
+  `cod_prod_injetorcr_mola_induzido` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_mola_induzido` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_mola_induzido` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_mola_marcha_lenta`
+--
+
+CREATE TABLE `tb_prod_injetorcr_mola_marcha_lenta` (
+  `id_prod_injetorcr_mola_marcha_lenta` int(5) NOT NULL,
+  `cod_prod_injetorcr_mola_marcha_lenta` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_mola_marcha_lenta` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_mola_marcha_lenta` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_porca_atuador`
+--
+
+CREATE TABLE `tb_prod_injetorcr_porca_atuador` (
+  `id_prod_injetorcr_porca_atuador` int(5) NOT NULL,
+  `cod_prod_injetorcr_porca_atuador` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_porca_atuador` varchar(60) NOT NULL,
+  `id_marcar_prod_injetorcr_porca_atuador` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_porca_bico`
+--
+
+CREATE TABLE `tb_prod_injetorcr_porca_bico` (
+  `id_prod_injetorcr_porca_bico` int(5) NOT NULL,
+  `cod_prod_injetorcr_porca_bico` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_porca_bico` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_porca_bico` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetorcr_valvula_controle`
+--
+
+CREATE TABLE `tb_prod_injetorcr_valvula_controle` (
+  `id_prod_injetorcr_valvula_controle` int(5) NOT NULL,
+  `cod_prod_injetorcr_valvula_controle` varchar(60) NOT NULL,
+  `nome_prod_injetorcr_valvula_controle` varchar(60) NOT NULL,
+  `id_marca_prod_injetorcr_valvula_controle` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetormec_arruela_pe_do_bico`
+--
+
+CREATE TABLE `tb_prod_injetormec_arruela_pe_do_bico` (
+  `id_prod_injetormec_arruela_pe_do_bico` int(5) NOT NULL,
+  `cod_prod_injetormec_arruela_pe_do_bico` varchar(60) NOT NULL,
+  `nome_prod_injetormec_arruela_pe_do_bico` varchar(60) NOT NULL,
+  `id_marca_prod_injetormec_arruela_pe_do_bico` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetormec_bico_injetor`
+--
+
+CREATE TABLE `tb_prod_injetormec_bico_injetor` (
+  `id_prod_injetormec_bico_injetor` int(5) NOT NULL,
+  `cod__prod_injetormec_bico_injetor` varchar(60) NOT NULL,
+  `nome_prod_injetormec_bico_injetor` varchar(60) NOT NULL,
+  `id_marca_prod_injetormec_bico_injetor` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_injetormec_reparo_injetor`
+--
+
+CREATE TABLE `tb_prod_injetormec_reparo_injetor` (
+  `id_prod_injetormec_reparo_injetor` int(5) NOT NULL,
+  `cod_prod_injetormec_reparo_injetor` varchar(60) NOT NULL,
+  `nome_prod_injetormec_reparo_injetor` varchar(60) NOT NULL,
+  `id_marca_prod_injetormec_reparo_injetor` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_tuborail_sensor_pressao`
+--
+
+CREATE TABLE `tb_prod_tuborail_sensor_pressao` (
+  `id_prod_tuborail_sensor_pressao` int(5) NOT NULL,
+  `cod_prod_tuborail_sensor_pressao` varchar(60) NOT NULL,
+  `nome_prod_tuborail_sensor_pressao` varchar(60) NOT NULL,
+  `id_marca_prod_tuborail_sensor_pressao` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_tuborail_valvula_limitadoratuborail`
+--
+
+CREATE TABLE `tb_prod_tuborail_valvula_limitadoratuborail` (
+  `id_prod_tuborail_valvula_limitadora` int(5) NOT NULL,
+  `cod_prod_tuborail_valvula_limitadora` varchar(60) NOT NULL,
+  `nome_prod_tuborail_valvula_limitadora` varchar(60) NOT NULL,
+  `id_marca_prod_tuborail_valvula_limitadora` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_prod_tuborail_valvula_reguladora_drv`
+--
+
+CREATE TABLE `tb_prod_tuborail_valvula_reguladora_drv` (
+  `id_prod_tuborail_valvula_reguladora_DRV` int(5) NOT NULL,
+  `cod_prod_tuborail_valvula_reguladora_DRV` varchar(60) NOT NULL,
+  `nome_prod_tuborail_valvula_reguladora_DRV` varchar(60) NOT NULL,
+  `id_marca_prod_tuborail_valvula_reguladora_DRV` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `tb_login_prestador`
+--
+ALTER TABLE `tb_login_prestador`
+  ADD PRIMARY KEY (`id_prestador`);
+
+--
+-- Índices para tabela `tb_login_tomador`
+--
+ALTER TABLE `tb_login_tomador`
+  ADD PRIMARY KEY (`id_tomador`);
+
+--
+-- Índices para tabela `tb_postagens`
+--
+ALTER TABLE `tb_postagens`
+  ADD PRIMARY KEY (`id_post`),
+  ADD KEY `id_prestador` (`id_prestador`);
+
+--
+-- Índices para tabela `tb_produtos`
+--
+ALTER TABLE `tb_produtos`
+  ADD PRIMARY KEY (`id_produtos`);
+
+--
+-- Índices para tabela `tb_produtos_relacao_categoria_marca_modelo_designacao`
+--
+ALTER TABLE `tb_produtos_relacao_categoria_marca_modelo_designacao`
+  ADD PRIMARY KEY (`id_produtos_relacao_categoria_marca_modelo_designacao`),
+  ADD KEY `produto_categoria_id` (`produtos_categoria_id`),
+  ADD KEY `produto_marca_id` (`produtos_marca_id`),
+  ADD KEY `produto_modelo_id` (`produtos_modelo_id`),
+  ADD KEY `produto_designacao_id` (`produtos_designacao_id`),
+  ADD KEY `produtos_produto_id` (`produtos_produto_id`);
+
+--
+-- Índices para tabela `tb_produto_categoria`
+--
+ALTER TABLE `tb_produto_categoria`
+  ADD PRIMARY KEY (`id_produto_categoria`);
+
+--
+-- Índices para tabela `tb_produto_designacao`
+--
+ALTER TABLE `tb_produto_designacao`
+  ADD PRIMARY KEY (`id_produto_designacao`);
+
+--
+-- Índices para tabela `tb_produto_marca`
+--
+ALTER TABLE `tb_produto_marca`
+  ADD PRIMARY KEY (`id_produto_marca`);
+
+--
+-- Índices para tabela `tb_produto_modelo`
+--
+ALTER TABLE `tb_produto_modelo`
+  ADD PRIMARY KEY (`id_produto_modelo`);
+
+--
+-- Índices para tabela `tb_produto_relacao_categoria_marca`
+--
+ALTER TABLE `tb_produto_relacao_categoria_marca`
+  ADD KEY `relacao_produto_categoria_id` (`relacao_produto_categoria_id`),
+  ADD KEY `relacao_produto_marca_id` (`relacao_produto_marca_id`);
+
+--
+-- Índices para tabela `tb_produto_tipo_atuador`
+--
+ALTER TABLE `tb_produto_tipo_atuador`
+  ADD PRIMARY KEY (`id_produto_tipo_atuador`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_acoplamento_falso`
+--
+ALTER TABLE `tb_prod_bombacr_acoplamento_falso`
+  ADD PRIMARY KEY (`id_prod_bombacr_acoplamento_falso`),
+  ADD KEY `id_marca_prod_bombacr_acoplamento_falso` (`id_marca_prod_bombacr_acoplamento_falso`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_atuador`
+--
+ALTER TABLE `tb_prod_bombacr_atuador`
+  ADD PRIMARY KEY (`id_prod_bombacr_atuador`),
+  ADD KEY `id_marca_prod_bombacr_atuador` (`id_marca_prod_bombacr_atuador`),
+  ADD KEY `id_tipo_atuador_prod_bombacr_atuador` (`id_tipo_atuador_prod_bombacr_atuador`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_bomba_engrenagem`
+--
+ALTER TABLE `tb_prod_bombacr_bomba_engrenagem`
+  ADD PRIMARY KEY (`id_prod_bombacr_bomba_engrenagem`),
+  ADD KEY `id_marca_prod_bombacr_bomba_engrenagem` (`id_marca_prod_bombacr_bomba_engrenagem`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_bucha_mancal`
+--
+ALTER TABLE `tb_prod_bombacr_bucha_mancal`
+  ADD PRIMARY KEY (`id_prod_bombacr_bucha_mancal`),
+  ADD KEY `id_marca_prod_bombacr_bucha_mancal` (`id_marca_prod_bombacr_bucha_mancal`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_cabeçote`
+--
+ALTER TABLE `tb_prod_bombacr_cabeçote`
+  ADD PRIMARY KEY (`id_prod_bombacr_cabeçote`),
+  ADD KEY `id_marca_prod_bombacr_cabeçote` (`id_marca_prod_bombacr_cabeçote`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_eixo_excentrico`
+--
+ALTER TABLE `tb_prod_bombacr_eixo_excentrico`
+  ADD PRIMARY KEY (`id_prod_bombacr_eixo_excentrico`),
+  ADD KEY `id_marca_prod_bombacr_eixo_excentrico` (`id_marca_prod_bombacr_eixo_excentrico`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_elemento`
+--
+ALTER TABLE `tb_prod_bombacr_elemento`
+  ADD PRIMARY KEY (`id_prod_bombacr_elemento`),
+  ADD KEY `id_marca_prod_bombacr_elemento` (`id_marca_prod_bombacr_elemento`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_esfera`
+--
+ALTER TABLE `tb_prod_bombacr_esfera`
+  ADD PRIMARY KEY (`id_prod_bombacr_esfera`),
+  ADD KEY `id_marca_prod_bombacr_esfera` (`id_marca_prod_bombacr_esfera`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_jg_reparo`
+--
+ALTER TABLE `tb_prod_bombacr_jg_reparo`
+  ADD PRIMARY KEY (`id_prod_bombacr_jg_reparo`),
+  ADD KEY `id_marca_prod_bombacr_jg_reparo` (`id_marca_prod_bombacr_jg_reparo`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_mola_pressao`
+--
+ALTER TABLE `tb_prod_bombacr_mola_pressao`
+  ADD PRIMARY KEY (`id_prod_bombacr_mola_pressao`),
+  ADD KEY `id_marca_prod_bombacr_mola_pressao` (`id_marca_prod_bombacr_mola_pressao`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_parafuso`
+--
+ALTER TABLE `tb_prod_bombacr_parafuso`
+  ADD PRIMARY KEY (`id_prod_bombacr_parafuso`),
+  ADD KEY `id_marca_prod_bombacr_parafuso` (`id_marca_prod_bombacr_parafuso`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_retentor`
+--
+ALTER TABLE `tb_prod_bombacr_retentor`
+  ADD PRIMARY KEY (`id_prod_bombacr_retentor`),
+  ADD KEY `id_marca_prod_bombacr_retentor` (`id_marca_prod_bombacr_retentor`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_roldana`
+--
+ALTER TABLE `tb_prod_bombacr_roldana`
+  ADD PRIMARY KEY (`id_prod_bombacr_roldana`),
+  ADD KEY `id_marca_prod_bombacr_roldana` (`id_marca_prod_bombacr_roldana`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_rolete`
+--
+ALTER TABLE `tb_prod_bombacr_rolete`
+  ADD PRIMARY KEY (`id_prod_bombacr_rolete`),
+  ADD KEY `id_marca_prod_bombacr_rolete` (`id_marca_prod_bombacr_rolete`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_tucho`
+--
+ALTER TABLE `tb_prod_bombacr_tucho`
+  ADD PRIMARY KEY (`id_prod_bombacr_tucho`),
+  ADD KEY `id_marca_prod_bombacr_tucho` (`id_marca_prod_bombacr_tucho`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_valvula_aspiracao`
+--
+ALTER TABLE `tb_prod_bombacr_valvula_aspiracao`
+  ADD PRIMARY KEY (`id_prod_bombacr_valvula_aspiracao`),
+  ADD KEY `id_marca_prod_bombacr_valvula_aspiracao` (`id_marca_prod_bombacr_valvula_aspiracao`);
+
+--
+-- Índices para tabela `tb_prod_bombacr_valvula_transbordo`
+--
+ALTER TABLE `tb_prod_bombacr_valvula_transbordo`
+  ADD PRIMARY KEY (`id_prod_bombacr_valvula_transbordo`),
+  ADD KEY `id_marca_prod_bombacr_valvula_transbordo` (`id_marca_prod_bombacr_valvula_transbordo`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_anel_oring`
+--
+ALTER TABLE `tb_prod_injetorcr_anel_oring`
+  ADD PRIMARY KEY (`id_prod_injetorcr_anel_oring`),
+  ADD KEY `id_marca_prod_injetorcr_anel_oring` (`id_marca_prod_injetorcr_anel_oring`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_arruela_pe_do_bico`
+--
+ALTER TABLE `tb_prod_injetorcr_arruela_pe_do_bico`
+  ADD PRIMARY KEY (`id_prod_injetorcr_arruela_pe_do_bico`),
+  ADD KEY `id_marca_prod_injetorcr_arruela_pe_do_bico` (`id_marca_prod_injetorcr_arruela_pe_do_bico`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_atuador`
+--
+ALTER TABLE `tb_prod_injetorcr_atuador`
+  ADD PRIMARY KEY (`id_prod_injetorcr_atuador`),
+  ADD KEY `tb_prod_injetorcr_atuador_ibfk_1` (`id_marca_prod_injetorcr_atuador`),
+  ADD KEY `id_tipo_atuador_prod_injetorcr_atuador` (`id_tipo_atuador_prod_injetorcr_atuador`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_bico_injetor`
+--
+ALTER TABLE `tb_prod_injetorcr_bico_injetor`
+  ADD PRIMARY KEY (`id_prod_injetorcr_bico_injetor`),
+  ADD KEY `id_marca_prod_injetorcr_bico_injetor` (`id_marca_prod_injetorcr_bico_injetor`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_conector_entrada`
+--
+ALTER TABLE `tb_prod_injetorcr_conector_entrada`
+  ADD PRIMARY KEY (`id_prod_injetorcr_conector_entrada`),
+  ADD KEY `id_marca_prod_injetorcr_conector_entrada` (`id_marca_prod_injetorcr_conector_entrada`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_filtro_injetor`
+--
+ALTER TABLE `tb_prod_injetorcr_filtro_injetor`
+  ADD PRIMARY KEY (`id_prod_injetorcr_filtro_injetor`),
+  ADD KEY `id_marca_prod_injetorcr_filtro_injetor` (`id_marca_prod_injetorcr_filtro_injetor`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_guia_calco_restricao`
+--
+ALTER TABLE `tb_prod_injetorcr_guia_calco_restricao`
+  ADD PRIMARY KEY (`id_prod_injetorcr_guia_calco_restricao`),
+  ADD KEY `id_marca_prod_injetorcr_guia_calco_restricao` (`id_marca_prod_injetorcr_guia_calco_restricao`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_guia_micro_esfera`
+--
+ALTER TABLE `tb_prod_injetorcr_guia_micro_esfera`
+  ADD PRIMARY KEY (`id_prod_injetorcr_guia_micro_esfera`),
+  ADD KEY `id_marca_prod_injetorcr_guia_micro_esfera` (`id_marca_prod_injetorcr_guia_micro_esfera`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_jg_pecas_induzido`
+--
+ALTER TABLE `tb_prod_injetorcr_jg_pecas_induzido`
+  ADD PRIMARY KEY (`id_prod_injetorcr_jg_pecas_induzido`),
+  ADD KEY `id_marca_prod_injetorcr_jg_pecas_induzido` (`id_marca_prod_injetorcr_jg_pecas_induzido`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_jg_reparo`
+--
+ALTER TABLE `tb_prod_injetorcr_jg_reparo`
+  ADD PRIMARY KEY (`id_prod_injetorcr_jg_reparo`),
+  ADD KEY `id_marca_prod_injetorcr_jg_reparo` (`id_marca_prod_injetorcr_jg_reparo`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_kit_reparo_completo`
+--
+ALTER TABLE `tb_prod_injetorcr_kit_reparo_completo`
+  ADD PRIMARY KEY (`id_prod_injetorcr_kit_reparo_completo`),
+  ADD KEY `id_marca_prod_injetorcr_kit_reparo_completo` (`id_marca_prod_injetorcr_kit_reparo_completo`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_micro_esfera`
+--
+ALTER TABLE `tb_prod_injetorcr_micro_esfera`
+  ADD PRIMARY KEY (`id_prod_injetorcr_micro_esfera`),
+  ADD KEY `id_marca_prod_injetorcr_micro_esfera` (`id_marca_prod_injetorcr_micro_esfera`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_mola_bobina`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_bobina`
+  ADD PRIMARY KEY (`id_prod_injetorcr_mola_bobina`),
+  ADD KEY `id_marca_prod_injetorcr_mola_bobina` (`id_marca_prod_injetorcr_mola_bobina`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_mola_induzido`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_induzido`
+  ADD PRIMARY KEY (`id_prod_injetorcr_mola_induzido`),
+  ADD KEY `id_marca_prod_injetorcr_mola_induzido` (`id_marca_prod_injetorcr_mola_induzido`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_mola_marcha_lenta`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_marcha_lenta`
+  ADD PRIMARY KEY (`id_prod_injetorcr_mola_marcha_lenta`),
+  ADD KEY `id_marca_prod_injetorcr_mola_marcha_lenta` (`id_marca_prod_injetorcr_mola_marcha_lenta`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_porca_atuador`
+--
+ALTER TABLE `tb_prod_injetorcr_porca_atuador`
+  ADD PRIMARY KEY (`id_prod_injetorcr_porca_atuador`),
+  ADD KEY `id_marcar_prod_injetorcr_porca_atuador` (`id_marcar_prod_injetorcr_porca_atuador`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_porca_bico`
+--
+ALTER TABLE `tb_prod_injetorcr_porca_bico`
+  ADD PRIMARY KEY (`id_prod_injetorcr_porca_bico`),
+  ADD KEY `id_marca_prod_injetorcr_porca_bico` (`id_marca_prod_injetorcr_porca_bico`);
+
+--
+-- Índices para tabela `tb_prod_injetorcr_valvula_controle`
+--
+ALTER TABLE `tb_prod_injetorcr_valvula_controle`
+  ADD PRIMARY KEY (`id_prod_injetorcr_valvula_controle`),
+  ADD KEY `id_marca_prod_injetorcr_valvula_controle` (`id_marca_prod_injetorcr_valvula_controle`);
+
+--
+-- Índices para tabela `tb_prod_injetormec_arruela_pe_do_bico`
+--
+ALTER TABLE `tb_prod_injetormec_arruela_pe_do_bico`
+  ADD PRIMARY KEY (`id_prod_injetormec_arruela_pe_do_bico`),
+  ADD KEY `id_marca_prod_injetormec_arruela_pe_do_bico` (`id_marca_prod_injetormec_arruela_pe_do_bico`);
+
+--
+-- Índices para tabela `tb_prod_injetormec_bico_injetor`
+--
+ALTER TABLE `tb_prod_injetormec_bico_injetor`
+  ADD PRIMARY KEY (`id_prod_injetormec_bico_injetor`),
+  ADD KEY `id_marca_prod_injetormec_bico_injetor` (`id_marca_prod_injetormec_bico_injetor`);
+
+--
+-- Índices para tabela `tb_prod_injetormec_reparo_injetor`
+--
+ALTER TABLE `tb_prod_injetormec_reparo_injetor`
+  ADD PRIMARY KEY (`id_prod_injetormec_reparo_injetor`),
+  ADD KEY `id_marca_prod_injetormec_reparo_injetor` (`id_marca_prod_injetormec_reparo_injetor`);
+
+--
+-- Índices para tabela `tb_prod_tuborail_sensor_pressao`
+--
+ALTER TABLE `tb_prod_tuborail_sensor_pressao`
+  ADD PRIMARY KEY (`id_prod_tuborail_sensor_pressao`),
+  ADD KEY `id_marca_prod_tuborail_sensor_pressao` (`id_marca_prod_tuborail_sensor_pressao`);
+
+--
+-- Índices para tabela `tb_prod_tuborail_valvula_limitadoratuborail`
+--
+ALTER TABLE `tb_prod_tuborail_valvula_limitadoratuborail`
+  ADD PRIMARY KEY (`id_prod_tuborail_valvula_limitadora`),
+  ADD KEY `id_marca_prod_tuborail_valvula_limitadora` (`id_marca_prod_tuborail_valvula_limitadora`);
+
+--
+-- Índices para tabela `tb_prod_tuborail_valvula_reguladora_drv`
+--
+ALTER TABLE `tb_prod_tuborail_valvula_reguladora_drv`
+  ADD PRIMARY KEY (`id_prod_tuborail_valvula_reguladora_DRV`),
+  ADD KEY `id_marca_prod_tuborail_valvula_reguladora_DRV` (`id_marca_prod_tuborail_valvula_reguladora_DRV`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `tb_login_prestador`
+--
+ALTER TABLE `tb_login_prestador`
+  MODIFY `id_prestador` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `tb_login_tomador`
+--
+ALTER TABLE `tb_login_tomador`
+  MODIFY `id_tomador` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `tb_postagens`
+--
+ALTER TABLE `tb_postagens`
+  MODIFY `id_post` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_produtos`
+--
+ALTER TABLE `tb_produtos`
+  MODIFY `id_produtos` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_produtos_relacao_categoria_marca_modelo_designacao`
+--
+ALTER TABLE `tb_produtos_relacao_categoria_marca_modelo_designacao`
+  MODIFY `id_produtos_relacao_categoria_marca_modelo_designacao` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_produto_categoria`
+--
+ALTER TABLE `tb_produto_categoria`
+  MODIFY `id_produto_categoria` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de tabela `tb_produto_designacao`
+--
+ALTER TABLE `tb_produto_designacao`
+  MODIFY `id_produto_designacao` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `tb_produto_marca`
+--
+ALTER TABLE `tb_produto_marca`
+  MODIFY `id_produto_marca` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de tabela `tb_produto_modelo`
+--
+ALTER TABLE `tb_produto_modelo`
+  MODIFY `id_produto_modelo` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_produto_tipo_atuador`
+--
+ALTER TABLE `tb_produto_tipo_atuador`
+  MODIFY `id_produto_tipo_atuador` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_acoplamento_falso`
+--
+ALTER TABLE `tb_prod_bombacr_acoplamento_falso`
+  MODIFY `id_prod_bombacr_acoplamento_falso` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_atuador`
+--
+ALTER TABLE `tb_prod_bombacr_atuador`
+  MODIFY `id_prod_bombacr_atuador` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_bomba_engrenagem`
+--
+ALTER TABLE `tb_prod_bombacr_bomba_engrenagem`
+  MODIFY `id_prod_bombacr_bomba_engrenagem` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_bucha_mancal`
+--
+ALTER TABLE `tb_prod_bombacr_bucha_mancal`
+  MODIFY `id_prod_bombacr_bucha_mancal` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_cabeçote`
+--
+ALTER TABLE `tb_prod_bombacr_cabeçote`
+  MODIFY `id_prod_bombacr_cabeçote` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_eixo_excentrico`
+--
+ALTER TABLE `tb_prod_bombacr_eixo_excentrico`
+  MODIFY `id_prod_bombacr_eixo_excentrico` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_elemento`
+--
+ALTER TABLE `tb_prod_bombacr_elemento`
+  MODIFY `id_prod_bombacr_elemento` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_esfera`
+--
+ALTER TABLE `tb_prod_bombacr_esfera`
+  MODIFY `id_prod_bombacr_esfera` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_jg_reparo`
+--
+ALTER TABLE `tb_prod_bombacr_jg_reparo`
+  MODIFY `id_prod_bombacr_jg_reparo` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_mola_pressao`
+--
+ALTER TABLE `tb_prod_bombacr_mola_pressao`
+  MODIFY `id_prod_bombacr_mola_pressao` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_parafuso`
+--
+ALTER TABLE `tb_prod_bombacr_parafuso`
+  MODIFY `id_prod_bombacr_parafuso` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_retentor`
+--
+ALTER TABLE `tb_prod_bombacr_retentor`
+  MODIFY `id_prod_bombacr_retentor` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_roldana`
+--
+ALTER TABLE `tb_prod_bombacr_roldana`
+  MODIFY `id_prod_bombacr_roldana` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_rolete`
+--
+ALTER TABLE `tb_prod_bombacr_rolete`
+  MODIFY `id_prod_bombacr_rolete` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_tucho`
+--
+ALTER TABLE `tb_prod_bombacr_tucho`
+  MODIFY `id_prod_bombacr_tucho` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_valvula_aspiracao`
+--
+ALTER TABLE `tb_prod_bombacr_valvula_aspiracao`
+  MODIFY `id_prod_bombacr_valvula_aspiracao` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_bombacr_valvula_transbordo`
+--
+ALTER TABLE `tb_prod_bombacr_valvula_transbordo`
+  MODIFY `id_prod_bombacr_valvula_transbordo` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_anel_oring`
+--
+ALTER TABLE `tb_prod_injetorcr_anel_oring`
+  MODIFY `id_prod_injetorcr_anel_oring` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_arruela_pe_do_bico`
+--
+ALTER TABLE `tb_prod_injetorcr_arruela_pe_do_bico`
+  MODIFY `id_prod_injetorcr_arruela_pe_do_bico` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_atuador`
+--
+ALTER TABLE `tb_prod_injetorcr_atuador`
+  MODIFY `id_prod_injetorcr_atuador` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_bico_injetor`
+--
+ALTER TABLE `tb_prod_injetorcr_bico_injetor`
+  MODIFY `id_prod_injetorcr_bico_injetor` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_conector_entrada`
+--
+ALTER TABLE `tb_prod_injetorcr_conector_entrada`
+  MODIFY `id_prod_injetorcr_conector_entrada` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_filtro_injetor`
+--
+ALTER TABLE `tb_prod_injetorcr_filtro_injetor`
+  MODIFY `id_prod_injetorcr_filtro_injetor` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_guia_calco_restricao`
+--
+ALTER TABLE `tb_prod_injetorcr_guia_calco_restricao`
+  MODIFY `id_prod_injetorcr_guia_calco_restricao` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_guia_micro_esfera`
+--
+ALTER TABLE `tb_prod_injetorcr_guia_micro_esfera`
+  MODIFY `id_prod_injetorcr_guia_micro_esfera` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_jg_pecas_induzido`
+--
+ALTER TABLE `tb_prod_injetorcr_jg_pecas_induzido`
+  MODIFY `id_prod_injetorcr_jg_pecas_induzido` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_jg_reparo`
+--
+ALTER TABLE `tb_prod_injetorcr_jg_reparo`
+  MODIFY `id_prod_injetorcr_jg_reparo` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_kit_reparo_completo`
+--
+ALTER TABLE `tb_prod_injetorcr_kit_reparo_completo`
+  MODIFY `id_prod_injetorcr_kit_reparo_completo` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_micro_esfera`
+--
+ALTER TABLE `tb_prod_injetorcr_micro_esfera`
+  MODIFY `id_prod_injetorcr_micro_esfera` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_mola_bobina`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_bobina`
+  MODIFY `id_prod_injetorcr_mola_bobina` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_mola_induzido`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_induzido`
+  MODIFY `id_prod_injetorcr_mola_induzido` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_mola_marcha_lenta`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_marcha_lenta`
+  MODIFY `id_prod_injetorcr_mola_marcha_lenta` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_porca_atuador`
+--
+ALTER TABLE `tb_prod_injetorcr_porca_atuador`
+  MODIFY `id_prod_injetorcr_porca_atuador` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_porca_bico`
+--
+ALTER TABLE `tb_prod_injetorcr_porca_bico`
+  MODIFY `id_prod_injetorcr_porca_bico` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetorcr_valvula_controle`
+--
+ALTER TABLE `tb_prod_injetorcr_valvula_controle`
+  MODIFY `id_prod_injetorcr_valvula_controle` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetormec_arruela_pe_do_bico`
+--
+ALTER TABLE `tb_prod_injetormec_arruela_pe_do_bico`
+  MODIFY `id_prod_injetormec_arruela_pe_do_bico` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetormec_bico_injetor`
+--
+ALTER TABLE `tb_prod_injetormec_bico_injetor`
+  MODIFY `id_prod_injetormec_bico_injetor` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_injetormec_reparo_injetor`
+--
+ALTER TABLE `tb_prod_injetormec_reparo_injetor`
+  MODIFY `id_prod_injetormec_reparo_injetor` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_tuborail_sensor_pressao`
+--
+ALTER TABLE `tb_prod_tuborail_sensor_pressao`
+  MODIFY `id_prod_tuborail_sensor_pressao` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_tuborail_valvula_limitadoratuborail`
+--
+ALTER TABLE `tb_prod_tuborail_valvula_limitadoratuborail`
+  MODIFY `id_prod_tuborail_valvula_limitadora` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tb_prod_tuborail_valvula_reguladora_drv`
+--
+ALTER TABLE `tb_prod_tuborail_valvula_reguladora_drv`
+  MODIFY `id_prod_tuborail_valvula_reguladora_DRV` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `tb_postagens`
+--
+ALTER TABLE `tb_postagens`
+  ADD CONSTRAINT `tb_postagens_ibfk_1` FOREIGN KEY (`id_prestador`) REFERENCES `tb_login_prestador` (`id_prestador`);
+
+--
+-- Limitadores para a tabela `tb_produtos_relacao_categoria_marca_modelo_designacao`
+--
+ALTER TABLE `tb_produtos_relacao_categoria_marca_modelo_designacao`
+  ADD CONSTRAINT `tb_produtos_relacao_categoria_marca_modelo_designacao_ibfk_1` FOREIGN KEY (`produtos_categoria_id`) REFERENCES `tb_produto_categoria` (`id_produto_categoria`),
+  ADD CONSTRAINT `tb_produtos_relacao_categoria_marca_modelo_designacao_ibfk_2` FOREIGN KEY (`produtos_marca_id`) REFERENCES `tb_produto_marca` (`id_produto_marca`),
+  ADD CONSTRAINT `tb_produtos_relacao_categoria_marca_modelo_designacao_ibfk_3` FOREIGN KEY (`produtos_modelo_id`) REFERENCES `tb_produto_modelo` (`id_produto_modelo`),
+  ADD CONSTRAINT `tb_produtos_relacao_categoria_marca_modelo_designacao_ibfk_4` FOREIGN KEY (`produtos_designacao_id`) REFERENCES `tb_produto_designacao` (`id_produto_designacao`),
+  ADD CONSTRAINT `tb_produtos_relacao_categoria_marca_modelo_designacao_ibfk_5` FOREIGN KEY (`produtos_produto_id`) REFERENCES `tb_produtos` (`id_produtos`);
+
+--
+-- Limitadores para a tabela `tb_produto_relacao_categoria_marca`
+--
+ALTER TABLE `tb_produto_relacao_categoria_marca`
+  ADD CONSTRAINT `tb_produto_relacao_categoria_marca_ibfk_1` FOREIGN KEY (`relacao_produto_categoria_id`) REFERENCES `tb_produto_categoria` (`id_produto_categoria`),
+  ADD CONSTRAINT `tb_produto_relacao_categoria_marca_ibfk_2` FOREIGN KEY (`relacao_produto_marca_id`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_acoplamento_falso`
+--
+ALTER TABLE `tb_prod_bombacr_acoplamento_falso`
+  ADD CONSTRAINT `tb_prod_bombacr_acoplamento_falso_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_acoplamento_falso`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_atuador`
+--
+ALTER TABLE `tb_prod_bombacr_atuador`
+  ADD CONSTRAINT `tb_prod_bombacr_atuador_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_atuador`) REFERENCES `tb_produto_marca` (`id_produto_marca`),
+  ADD CONSTRAINT `tb_prod_bombacr_atuador_ibfk_2` FOREIGN KEY (`id_tipo_atuador_prod_bombacr_atuador`) REFERENCES `tb_produto_tipo_atuador` (`id_produto_tipo_atuador`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_bomba_engrenagem`
+--
+ALTER TABLE `tb_prod_bombacr_bomba_engrenagem`
+  ADD CONSTRAINT `tb_prod_bombacr_bomba_engrenagem_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_bomba_engrenagem`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_bucha_mancal`
+--
+ALTER TABLE `tb_prod_bombacr_bucha_mancal`
+  ADD CONSTRAINT `tb_prod_bombacr_bucha_mancal_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_bucha_mancal`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_cabeçote`
+--
+ALTER TABLE `tb_prod_bombacr_cabeçote`
+  ADD CONSTRAINT `tb_prod_bombacr_cabeçote_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_cabeçote`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_eixo_excentrico`
+--
+ALTER TABLE `tb_prod_bombacr_eixo_excentrico`
+  ADD CONSTRAINT `tb_prod_bombacr_eixo_excentrico_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_eixo_excentrico`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_elemento`
+--
+ALTER TABLE `tb_prod_bombacr_elemento`
+  ADD CONSTRAINT `tb_prod_bombacr_elemento_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_elemento`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_esfera`
+--
+ALTER TABLE `tb_prod_bombacr_esfera`
+  ADD CONSTRAINT `tb_prod_bombacr_esfera_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_esfera`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_jg_reparo`
+--
+ALTER TABLE `tb_prod_bombacr_jg_reparo`
+  ADD CONSTRAINT `tb_prod_bombacr_jg_reparo_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_jg_reparo`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_mola_pressao`
+--
+ALTER TABLE `tb_prod_bombacr_mola_pressao`
+  ADD CONSTRAINT `tb_prod_bombacr_mola_pressao_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_mola_pressao`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_parafuso`
+--
+ALTER TABLE `tb_prod_bombacr_parafuso`
+  ADD CONSTRAINT `tb_prod_bombacr_parafuso_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_parafuso`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_retentor`
+--
+ALTER TABLE `tb_prod_bombacr_retentor`
+  ADD CONSTRAINT `tb_prod_bombacr_retentor_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_retentor`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_roldana`
+--
+ALTER TABLE `tb_prod_bombacr_roldana`
+  ADD CONSTRAINT `tb_prod_bombacr_roldana_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_roldana`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_rolete`
+--
+ALTER TABLE `tb_prod_bombacr_rolete`
+  ADD CONSTRAINT `tb_prod_bombacr_rolete_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_rolete`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_tucho`
+--
+ALTER TABLE `tb_prod_bombacr_tucho`
+  ADD CONSTRAINT `tb_prod_bombacr_tucho_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_tucho`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_valvula_aspiracao`
+--
+ALTER TABLE `tb_prod_bombacr_valvula_aspiracao`
+  ADD CONSTRAINT `tb_prod_bombacr_valvula_aspiracao_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_valvula_aspiracao`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_bombacr_valvula_transbordo`
+--
+ALTER TABLE `tb_prod_bombacr_valvula_transbordo`
+  ADD CONSTRAINT `tb_prod_bombacr_valvula_transbordo_ibfk_1` FOREIGN KEY (`id_marca_prod_bombacr_valvula_transbordo`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_anel_oring`
+--
+ALTER TABLE `tb_prod_injetorcr_anel_oring`
+  ADD CONSTRAINT `tb_prod_injetorcr_anel_oring_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_anel_oring`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_arruela_pe_do_bico`
+--
+ALTER TABLE `tb_prod_injetorcr_arruela_pe_do_bico`
+  ADD CONSTRAINT `tb_prod_injetorcr_arruela_pe_do_bico_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_arruela_pe_do_bico`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_atuador`
+--
+ALTER TABLE `tb_prod_injetorcr_atuador`
+  ADD CONSTRAINT `tb_prod_injetorcr_atuador_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_atuador`) REFERENCES `tb_produto_marca` (`id_produto_marca`),
+  ADD CONSTRAINT `tb_prod_injetorcr_atuador_ibfk_2` FOREIGN KEY (`id_tipo_atuador_prod_injetorcr_atuador`) REFERENCES `tb_produto_tipo_atuador` (`id_produto_tipo_atuador`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_bico_injetor`
+--
+ALTER TABLE `tb_prod_injetorcr_bico_injetor`
+  ADD CONSTRAINT `tb_prod_injetorcr_bico_injetor_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_bico_injetor`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_conector_entrada`
+--
+ALTER TABLE `tb_prod_injetorcr_conector_entrada`
+  ADD CONSTRAINT `tb_prod_injetorcr_conector_entrada_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_conector_entrada`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_filtro_injetor`
+--
+ALTER TABLE `tb_prod_injetorcr_filtro_injetor`
+  ADD CONSTRAINT `tb_prod_injetorcr_filtro_injetor_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_filtro_injetor`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_guia_calco_restricao`
+--
+ALTER TABLE `tb_prod_injetorcr_guia_calco_restricao`
+  ADD CONSTRAINT `tb_prod_injetorcr_guia_calco_restricao_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_guia_calco_restricao`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_guia_micro_esfera`
+--
+ALTER TABLE `tb_prod_injetorcr_guia_micro_esfera`
+  ADD CONSTRAINT `tb_prod_injetorcr_guia_micro_esfera_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_guia_micro_esfera`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_jg_pecas_induzido`
+--
+ALTER TABLE `tb_prod_injetorcr_jg_pecas_induzido`
+  ADD CONSTRAINT `tb_prod_injetorcr_jg_pecas_induzido_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_jg_pecas_induzido`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_jg_reparo`
+--
+ALTER TABLE `tb_prod_injetorcr_jg_reparo`
+  ADD CONSTRAINT `tb_prod_injetorcr_jg_reparo_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_jg_reparo`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_kit_reparo_completo`
+--
+ALTER TABLE `tb_prod_injetorcr_kit_reparo_completo`
+  ADD CONSTRAINT `tb_prod_injetorcr_kit_reparo_completo_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_kit_reparo_completo`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_micro_esfera`
+--
+ALTER TABLE `tb_prod_injetorcr_micro_esfera`
+  ADD CONSTRAINT `tb_prod_injetorcr_micro_esfera_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_micro_esfera`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_mola_bobina`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_bobina`
+  ADD CONSTRAINT `tb_prod_injetorcr_mola_bobina_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_mola_bobina`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_mola_induzido`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_induzido`
+  ADD CONSTRAINT `tb_prod_injetorcr_mola_induzido_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_mola_induzido`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_mola_marcha_lenta`
+--
+ALTER TABLE `tb_prod_injetorcr_mola_marcha_lenta`
+  ADD CONSTRAINT `tb_prod_injetorcr_mola_marcha_lenta_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_mola_marcha_lenta`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_porca_atuador`
+--
+ALTER TABLE `tb_prod_injetorcr_porca_atuador`
+  ADD CONSTRAINT `tb_prod_injetorcr_porca_atuador_ibfk_1` FOREIGN KEY (`id_marcar_prod_injetorcr_porca_atuador`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_porca_bico`
+--
+ALTER TABLE `tb_prod_injetorcr_porca_bico`
+  ADD CONSTRAINT `tb_prod_injetorcr_porca_bico_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_porca_bico`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetorcr_valvula_controle`
+--
+ALTER TABLE `tb_prod_injetorcr_valvula_controle`
+  ADD CONSTRAINT `tb_prod_injetorcr_valvula_controle_ibfk_1` FOREIGN KEY (`id_marca_prod_injetorcr_valvula_controle`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetormec_arruela_pe_do_bico`
+--
+ALTER TABLE `tb_prod_injetormec_arruela_pe_do_bico`
+  ADD CONSTRAINT `tb_prod_injetormec_arruela_pe_do_bico_ibfk_1` FOREIGN KEY (`id_marca_prod_injetormec_arruela_pe_do_bico`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetormec_bico_injetor`
+--
+ALTER TABLE `tb_prod_injetormec_bico_injetor`
+  ADD CONSTRAINT `tb_prod_injetormec_bico_injetor_ibfk_1` FOREIGN KEY (`id_marca_prod_injetormec_bico_injetor`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_injetormec_reparo_injetor`
+--
+ALTER TABLE `tb_prod_injetormec_reparo_injetor`
+  ADD CONSTRAINT `tb_prod_injetormec_reparo_injetor_ibfk_1` FOREIGN KEY (`id_marca_prod_injetormec_reparo_injetor`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_tuborail_sensor_pressao`
+--
+ALTER TABLE `tb_prod_tuborail_sensor_pressao`
+  ADD CONSTRAINT `tb_prod_tuborail_sensor_pressao_ibfk_1` FOREIGN KEY (`id_marca_prod_tuborail_sensor_pressao`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_tuborail_valvula_limitadoratuborail`
+--
+ALTER TABLE `tb_prod_tuborail_valvula_limitadoratuborail`
+  ADD CONSTRAINT `tb_prod_tuborail_valvula_limitadoratuborail_ibfk_1` FOREIGN KEY (`id_marca_prod_tuborail_valvula_limitadora`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+
+--
+-- Limitadores para a tabela `tb_prod_tuborail_valvula_reguladora_drv`
+--
+ALTER TABLE `tb_prod_tuborail_valvula_reguladora_drv`
+  ADD CONSTRAINT `tb_prod_tuborail_valvula_reguladora_drv_ibfk_1` FOREIGN KEY (`id_marca_prod_tuborail_valvula_reguladora_DRV`) REFERENCES `tb_produto_marca` (`id_produto_marca`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
